@@ -34,8 +34,6 @@ class Rektangel:
         self.fart = fart
         self.vindu = vindu
 
-
-
     def tegne(self):
         pg.draw.rect(self.vindu, (255,0,0), (self.x,self.y,self.bredde,self.hoyde)) #xpos ypos bredde høyde
     def flytt(self):
@@ -43,7 +41,18 @@ class Rektangel:
             self.fart = -self.fart
         self.y -= self.fart
 
-        
+
+class Sluttested:
+    def __init__(self, x, y, bredde, hoyde, vindu):
+        self.x = x
+        self.y = y
+        self.bredde = bredde
+        self.hoyde = hoyde
+        self.vindu = vindu
+
+    def tegne(self):
+        pg.draw.rect(self.vindu, (0,0,0), (self.x,self.y,self.bredde,self.hoyde))        
+
 
 
 VINDU_BREDDE = 700
@@ -54,12 +63,14 @@ pg.display.flip()
  
 ball = Ball(25, 350, 25, 0.1, vindu,(255,0,0))
 firekant = Rektangel(350,350,50,50,0.1,vindu)
+sluttAreal = Sluttested(650, 300, 80, 80, vindu)
 
 fortsett = True 
 while fortsett:
     vindu.fill((255,255,255))
     ball.tegne()
     firekant.tegne()
+    sluttAreal.tegne()
     pg.display.flip()
  
     trykkede_taster = pg.key.get_pressed()
