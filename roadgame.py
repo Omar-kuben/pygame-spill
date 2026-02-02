@@ -25,6 +25,13 @@ class Ball:
         elif trykkede_taster[pg.K_RIGHT] and self._x_pos < self._vindu.get_width() - self._radius:
             self._x_pos += self._fart
 
+
+    def gameOver(self, firekant:'Rektangel'):
+        if self._x_pos + self._radius > firekant.x and self._x_pos - self._radius < firekant.x + firekant.bredde and self._y_pos + self._radius > firekant.y and self._y_pos - self._radius < firekant.y + firekant.hoyde:
+            return True
+        else:
+            return False 
+
 class Rektangel:
     def __init__(self, x, y, bredde, hoyde, fart, vindu):
         self.x = x
@@ -41,7 +48,6 @@ class Rektangel:
             self.fart = -self.fart
         self.y -= self.fart
 
-
 class Sluttested:
     def __init__(self, x, y, bredde, hoyde, vindu):
         self.x = x
@@ -51,10 +57,11 @@ class Sluttested:
         self.vindu = vindu
 
     def tegne(self):
-        pg.draw.rect(self.vindu, (0,0,0), (self.x,self.y,self.bredde,self.hoyde))        
+        pg.draw.rect(self.vindu, (0,0,0), (self.x,self.y,self.bredde,self.hoyde))
 
+        
 
-
+font = pg.font.SysFont("Arial", 24)
 VINDU_BREDDE = 700
 VINDU_HOYDE  = 650
 vindu = pg.display.set_mode([VINDU_BREDDE, VINDU_HOYDE])
@@ -71,6 +78,13 @@ while fortsett:
     ball.tegne()
     firekant.tegne()
     sluttAreal.tegne()
+    GAMEOVER  = ball.gameOver(firekant)
+
+
+    if GAMEOVER == True:
+        tekst = font.render("GAME OVER", True, (0,0,0))
+        vindu.blit(tekst, (200, 300))
+    
     pg.display.flip()
  
     trykkede_taster = pg.key.get_pressed()
@@ -81,4 +95,3 @@ while fortsett:
         if event.type == pg.QUIT:
             fortsett = False  
 pg.quit()
-
